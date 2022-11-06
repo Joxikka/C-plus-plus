@@ -1,0 +1,219 @@
+//1.
+#include <iostream>
+
+using namespace std;
+
+bool prost(int n){
+  if(n == 1 ||(n % 2 == 0 && n != 2) ||(n % 3 == 0 && n != 3))
+        return false;
+  for(int k = 1; (6*k - 1) * (6*k - 1) <= n; k++){
+      if (n % (6 * k + 1) == 0 || n % (6 * k - 1) == 0) 
+        return false;
+  }
+  return true;
+}
+
+bool superprost(int n) {
+  if(n < 10) return prost(n);
+  return prost(n) && superprost(n/10);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    if(superprost(n))
+        cout << "Broj je superprost" << endl;
+    else
+        cout << "Broj nije superprost" << endl;
+    return 0;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+//2. a)
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int max(int a[],int n){
+    int max=INT_MIN;
+    for(int i=0;i<n;i++){
+        if(a[i]>max)
+            max=a[i];
+    }
+    return max;
+}
+
+int min(int a[],int n){
+    int min=INT_MAX;
+    for(int i=0;i<n;i++){
+        if(a[i]<min)
+            min=a[i];
+    }
+    return min;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    
+    string s;
+    for(int i=0;i<n;i++){
+        cin >> s[i];
+    }
+    
+    int a[n+1];
+    for(int j=0;j<n+1;j++){
+        cin >> a[j];
+    }
+    
+    int izraz = max(a,n+1);
+    
+    for(int i=0;i<n;i++){
+        switch(s[i]){
+        case '+': izraz+=max(a,n+1);break;
+        case '-': izraz-=min(a,n+1);break;
+        }
+    }
+    cout << izraz;
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+//2. b)
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+#include <algorithm>
+
+using namespace std;
+
+int max(int a[],int n){
+    int max=INT_MIN;
+    for(int i=0;i<n;i++){
+        if(a[i]>max)
+            max=a[i];
+    }
+    return max;
+}
+
+int min(int a[],int n){
+    int min=INT_MAX;
+    for(int i=0;i<n;i++){
+        if(a[i]<min)
+            min=a[i];
+    }
+    return min;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    
+    string s;
+    for(int i=0;i<n;i++){
+        cin >> s[i];
+    }
+    
+    int a[n+1];
+    for(int j=0;j<n+1;j++){
+        cin >> a[j];
+    }
+    
+    sort(a,a+(n+1));
+    int br1 = 0, br2 = n-1;
+    int izraz = a[n];
+    int i=0;
+    while(i<n){
+        switch(s[i]){
+            case '+': izraz+=a[br2];br2--;break;
+            case '-': izraz-=a[br1];br1++;break;
+        }
+        i++;
+    }
+    cout << izraz;
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+//3.
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int binarnaPretraga(int a[], int n, int x) {
+    int l, d, s;
+    l = 0;
+    d = n - 1;
+    while (l <= d) {
+        s = (d + l) / 2;
+        if (a[s] > x) {
+            d = s - 1;
+        }
+        else {
+            if (a[s] < x) {
+                l = s + 1;
+            }
+            else
+                return s;
+        }
+    }
+    return -1;
+}
+
+void unos(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+}
+
+int main()
+{
+    int x, n, k, binP;
+    cin >> x >> n >> k;
+    int a[k], b[n-k];
+    unos(a, k);
+    unos(b, n-k);
+    sort(a, a + k);
+    
+    for (int i = 0; i < n - k; i++) {
+        binP = binarnaPretraga(a, k, x - b[i]);
+        if (binP != -1)
+            cout << "(" << b[i] << ", " << a[binP] << ")" << endl;
+    }
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+//4.
+#include <iostream>
+
+using namespace std;
+
+int zbirAritmetickogNiza(int a1,int d,int n){
+  return n*a1+d*(n-1)*n/2;
+}
+
+int clanAritmetickogNiza(int a1,int d,int n){
+    return a1 + (n-1)*d;
+}
+
+int main()
+{
+    int n, d1, d2;
+    cin >> n >> d1 >> d2;
+    int zbir1 = zbirAritmetickogNiza(0,d1,n);
+    int zbir2 = zbirAritmetickogNiza(0,d2,n);
+    int zbirPoslednjaVrsta = zbirAritmetickogNiza(clanAritmetickogNiza(0,d1,n),d2,clanAritmetickogNiza(1,d2,n));
+    int zbirNaIvici = zbir1 + zbir2 + zbirPoslednjaVrsta;
+    cout << zbirNaIvici;
+    return 0;
+}
