@@ -1,0 +1,310 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+typedef struct tacka{
+    float x;
+    float y;
+}TACKA;
+
+int main()
+{
+    TACKA T;
+    cin >> T.x >> T.y;
+    int a;
+    cin >> a;
+    T.x = abs(T.x);
+    T.y = abs(T.y);
+    int dx,dy;
+    if(T.x > a/2)
+        dx = T.x - a/2;
+    if(T.y > a/2)
+        dy = T.y - a/2;
+    float d=sqrt((dx*dx)+(dy*dy));
+    cout << d;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+
+using namespace std;
+
+typedef struct Tacka{
+    double x;
+    double y;
+}Tacka;
+
+int main()
+{
+    int a1, b1, a2, b2;
+    cin >> a1 >> b1;
+    cin >> a2 >> b2;
+    if(a1 == a2){
+        if(b1 == b2)
+            cout << "podudarne" << endl;
+        else
+            cout << "paralelne" << endl;
+    }
+    else{
+        double x = double(b2-b1) / (a1-a2);
+        double y = double(a1)*x + b1;
+        cout << "seku se u " << x << "," << y << endl;
+    }
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+typedef struct Teme{
+    int x;
+    int y;
+}Teme;
+
+int main()
+{
+    Teme a;
+    cin >> a.x >> a.y;
+    Teme b;
+    cin >> b.x >> b.y;
+    Teme c;
+    cin >> c.x >> c.y;
+    float A,B,C;
+    A=sqrt(pow((b.x-a.x),2) + pow((b.y-a.y),2));
+    B=sqrt(pow((c.x-b.x),2) + pow((c.y-b.y),2));
+    C=sqrt(pow((c.x-a.x),2) + pow((c.y-a.y),2));
+    float P, S;
+    S=(A+B+C)/2;
+    P=sqrt(S*(S-A)*(S-B)*(S-C));
+    cout << P;
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+typedef struct Tacka{
+    int x;
+    int y;
+}Tacka;
+
+bool saIsteStrane(Tacka t1, Tacka t2, float a, float b){
+    return ((t1.y-(a*t1.x+b))+(t2.y-(a*t2.x+b))) > 0;
+}
+
+int main()
+{
+    float a,b;
+    cout << "Unesi koeficijente a i b:" << endl;
+    cin >> a >> b;
+    cout << "Unesi koordinate tacaka:" << endl;
+    Tacka t1;
+    cin >> t1.x >> t1.y;
+    Tacka t2;
+    cin >> t2.x >> t2.y;
+    if(saIsteStrane(t1,t2,a,b))
+        cout << "DA - tacke se nalaze sa iste strane prave" << endl;
+    else
+        cout << "NE - tacke se ne nalaze sa iste strane prave" << endl;
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+typedef struct Tacka{
+    int x;
+    int y;
+}Tacka;
+
+bool saIsteStrane(Tacka T, Tacka O, float a, float b){
+    return ((T.y-(a*T.x+b))+(O.y-(a*O.x+b))) > 0;
+}
+
+int main()
+{
+    Tacka A;
+    Tacka B;
+    cin >> A.x >> A.y;
+    cin >> B.x >> B.y;
+    Tacka T;
+    cin >> T.x >> T.y;
+    int br=0;
+    float a=(B.y-A.y)/(B.x-A.x);
+    float b=A.y-A.x*a;
+    cout << "Unesi broj tacaka:" << endl;
+    int n;
+    cin >> n;
+    while(n){
+        Tacka O;
+        cin >> O.x >> O.y;
+        if(saIsteStrane(T,O,a,b))
+            br++;
+        n--;
+    }
+    cout << "Broj tacaka koji su na istoj strani kao i tacka T: " << br << endl;
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+
+using namespace std;
+
+typedef struct Tacka{
+    float x;
+    float y;
+}Tacka;
+
+int SaIsteStranePrave(Tacka T1,Tacka T2, Tacka T3, Tacka T4){
+    int t3 = (T3.y - T1.y)*(T2.x - T1.x) - (T2.y - T1.y) * (T3.x - T1.x);
+    int t4 = (T4.y - T1.y)*(T2.x - T1.x) - (T2.y - T1.y) * (T4.x - T1.x);
+    return (t3 * t4 > 0);
+}
+
+
+int main()
+{
+    Tacka A, B, C, D;
+    scanf("%f %f", &A.x, &A.y);
+    scanf("%f %f", &B.x, &B.y);
+    scanf("%f %f", &C.x, &C.y);
+    printf("Unesite koordinate tacke D za koju se ispituje da li pripada trouglu ABC:\n");
+    scanf("%f %f", &D.x, &D.y);
+
+    if(SaIsteStranePrave(A,B,C,D) && SaIsteStranePrave(B,C,A,D) && SaIsteStranePrave(A,C,B,D))
+        printf("Tacka D pripada trouglu ABC\n");
+    else
+        printf("Tacka D ne pripada trouglu ABC\n");
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+bool saIsteStrane(Tacka t1, Tacka t2, double a, double b){
+  return ((t1.y - (a*t1.x+b)) * (t2.y - (a*t2.x+b))) > 0;
+}
+
+double racunaj_a(Tacka t1, Tacka t2){
+  double a = (t2.y-t1.y) / (t2.x-t1.x);
+  if(t2.x-t1.x == 0)
+    return 0;
+  else
+    return a;
+}
+
+double racunaj_b(Tacka t1, double a){
+  return (t1.y-t1.x*a);
+}
+
+int main(){
+  Tacka A,B,C,D;
+  cin >> A.x >> A.y >> B.x >> B.y >> C.x >> C.y >> D.x >> D.y;
+  double a1 = racunaj_a(A,B);
+  double b1 = racunaj_b(A,a1);
+  double a2 = racunaj_a(C,D);
+  double b2 = racunaj_b(C,a2);
+  if(saIsteStranePrave(A,B,a2,b2) || saIsteStranePrave(C,D,a1,b1)){
+    cout << "ne seku se" << endl;
+  }
+  else{
+    cout << "seku se" << endl;
+    Tacka T;
+    T.x = (b2-b1) / (a1-a2);
+    if((a1-a2) == 0)
+      T.x = 0;
+    T.y = a1* T.x + b1;
+    if(A.x == B.x && A.x == C.x){
+      T.x = C.x;
+      T.y = C.y;
+    }
+    if(A.x == B.x && A.x == D.x){
+      T.x = D.x;
+      T.y = D.y;
+    }
+    if(C.x == D.x && C.x == A.x){
+      T.x = A.x;
+      T.y = A.y;
+    }
+    if(C.x == D.x && C.x == B.x){
+      T.x = B.x;
+      T.y = B.y;
+    }
+    cout << T.x << T.y << endl;
+  }
+  return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+double duzina_preseka(int a, int b, int c, int d){
+  return min(b,d) - max(a,c);
+}
+
+int main(){
+  Tacka A,B,C,D;
+  cin >> A.x >> A.y >> B.x >> B.y >> C.x >> C.y >> D.x >> D.y;
+  cout << duzina_preseka(A.x,B.x,C.x,D.x) * duzina_preseka(A.y,B.y,C.y,D.y);
+  return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+float odstojanje(Tacka t, Tacka t1){
+  return (sqrt(pow((float)(t.x-t1.x),2)) + (pow((float)(t.y-t1.y),2))));
+}
+
+int main(){
+  int n;
+  cin >> n;
+  Tacka t[n];
+  for(int i=0;i<n;i++)
+    cin >> t[i].x >> t[i].y;
+  float maks = 0;
+  for(i=2;i<n-1;i++)
+    maks = max(maks,odstojanje(t[0],t[i]));
+  cout << maks;
+  return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+float odstojanje(Tacka t, Tacka t1){
+  return (sqrt(pow((float)(t.x-t1.x),2)) + (pow((float)(t.y-t1.y),2))));
+}
+
+float pTrougla(float a, float b, float c){
+  float S = (a+b+c) / 2;
+  return sqrt(S*(S-a)*(S-b)*(S-c));
+}
+
+int main(){
+  int n;
+  cin >> n;
+  Tacka t[n];
+  for(int i=0;i<n;i++)
+    cin >> t[i].x >> t[i].y;
+  float P = 0;
+  for(i=1;i<n-1;i++){
+    float a = odstojanje(t[0],t[i]);
+    float b = odstojanje(t[i],t[i+1]);
+    float c = odstojanje(t[0],t[i+1]);
+    P+= pTrougla(a,b,c);
+  }
+  cout << P;
+  return 0;
+}
