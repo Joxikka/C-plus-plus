@@ -1,0 +1,63 @@
+//2.
+
+int main(){
+  int x,y,a,b;
+  cin >> a >> b;
+  y=b;  //y=ax+b ali je x=0 => y=a*0+b = b
+  x=-b/a;  //y=ax+b ali y=0 => 0=ax+b => ax=-b => x=-b/a
+  if(x>0 && y>0)
+    cout <<  "I kvadrant" << endl;
+  if(x<0 && y>0)
+    cout <<  "II kvadrant" << endl;
+  if(x<0 && y<0)
+    cout <<  "III kvadrant" << endl;
+  if(x>0 && y<0)
+    cout <<  "IV kvadrant" << endl;
+}
+
+------------------------------------------------------------------------------------------------
+
+//4.
+
+typedef struct Tacka{
+    float x;
+    float y;
+}Tacka;
+
+float odstojanje(Tacka t, Tacka t1){
+  return (sqrt(pow((float)(t.x-t1.x),2)) + (pow((float)(t.y-t1.y),2))));
+}
+
+float pTrougla(float a, float b, float c){
+  float S = (a+b+c) / 2;
+  return sqrt(S*(S-a)*(S-b)*(S-c));
+}
+
+int main(){
+  int n;
+  cin >> n;
+  Tacka T;
+  cin >> T.x >> T.y;
+  Tacka t[n];
+  for(int i=0;i<n;i++)
+    cin >> t[i].x >> t[i].y;
+  float P1 = 0;
+  for(i=1;i<n-1;i++){
+    float a = odstojanje(t[0],t[i]);
+    float b = odstojanje(t[i],t[i+1]);
+    float c = odstojanje(t[0],t[i+1]);
+    P1+= pTrougla(a,b,c);
+  }
+  int P2;
+  for(i=1;i<n-1;i++){
+    float a = odstojanje(T,t[i]);
+    float b = odstojanje(t[i],t[i+1]);
+    float c = odstojanje(T,t[i+1]);
+    P2+= pTrougla(a,b,c);
+  }
+  if(P1 == P2)
+    cout << "Tacka pripada mnogouglu" << endl;
+  else
+    cout << "Tacka ne pripada mnogouglu" << endl;
+  return 0;
+}
